@@ -4,10 +4,14 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
 
   // IntelliSense: suggestions for names, signatures and docs (e.g. Math.atan2, dot(a, b))...
-  "editor.quickSuggestions": { "other": true, "comments": false, "strings": false },
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": false,
+    "strings": false
+  },
   "editor.suggestOnTriggerCharacters": true,
   "editor.parameterHints.enabled": true,
-  "editor.hover.enabled": true,
+  "editor.hover.enabled": "on",
 
   // ...but no ghost-text completions of whole lines (AI / inline suggestions).
   "editor.inlineSuggest.enabled": false,

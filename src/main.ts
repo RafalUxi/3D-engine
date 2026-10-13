@@ -1,37 +1,24 @@
 import './style.css';
+import { resize } from './base';
+import { calculateCoordinates, drawPoint2D, fillBG } from './engine';
 
-const canvas = document.querySelector<HTMLCanvasElement>('#screen');
-if (!canvas) throw new Error('Canvas #screen not found');
+function draw(): void {
+  // resert scree/ fill bg
 
-const ctx = canvas.getContext('2d');
-if (!ctx) throw new Error('Canvas 2D context not available');
+  fillBG('black');
 
-// Match the backing buffer to the CSS size (and device pixel ratio) so the dot stays sharp.
-function resize(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D): void {
-  const dpr = window.devicePixelRatio || 1;
-  canvas.width = Math.floor(canvas.clientWidth * dpr);
-  canvas.height = Math.floor(canvas.clientHeight * dpr);
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-}
+  // transform to 3D
+  const coord = calculateCoordinates(0, 0, 5);
+  if (!coord) return;
 
-function draw(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D): void {
-  const w = canvas.clientWidth;
-  const h = canvas.clientHeight;
-
-  ctx.fillStyle = 'black';
-  ctx.fillRect(0, 0, w, h);
-
-  ctx.fillStyle = 'red';
-  ctx.beginPath();
-  ctx.arc(w / 2, h / 2, 8, 0, Math.PI * 2);
-  ctx.fill();
+  drawPoint2D(coord.x, coord?.y, 'red');
 }
 
 const frame = (): void => {
-  draw(canvas, ctx);
+  draw();
   requestAnimationFrame(frame);
 };
 
-resize(canvas, ctx);
-window.addEventListener('resize', () => resize(canvas, ctx));
+resize();
+window.addEventListener('resize', () => resize());
 requestAnimationFrame(frame);

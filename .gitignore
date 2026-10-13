@@ -8,3 +8,7 @@ dist
 coverage
 *:Zone.Identifier
 .DS_Store
+CLAUDE.md
+
+# Claude Code (personal hooks and snapshots)
+.claude/
