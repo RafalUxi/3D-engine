@@ -1,0 +1,22 @@
+{
+  // Formatting
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // IntelliSense: suggestions for names, signatures and docs (e.g. Math.atan2, dot(a, b))...
+  "editor.quickSuggestions": { "other": true, "comments": false, "strings": false },
+  "editor.suggestOnTriggerCharacters": true,
+  "editor.parameterHints.enabled": true,
+  "editor.hover.enabled": true,
+
+  // ...but no ghost-text completions of whole lines (AI / inline suggestions).
+  "editor.inlineSuggest.enabled": false,
+  "github.copilot.enable": { "*": false },
+  "github.copilot.nextEditSuggestions.enabled": false,
+
+  // Use the project's TypeScript version
+  "typescript.tsdk": "node_modules/typescript/lib",
+
+  // Tailwind IntelliSense for classes in HTML/TS
+  "files.associations": { "*.css": "tailwindcss" }
+}
