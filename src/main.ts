@@ -5,7 +5,12 @@ import { cube, cubeEdge } from './geometry';
 
 const frame = (): void => {
   fillBG('black');
-  uxiDraw3D(cube, cubeEdge);
+  uxiDraw3D(
+    cube,
+    cubeEdge,
+    { x: Math.PI / 6, y: Math.PI / 2, z: Math.PI / 5 },
+    { x: 0, y: 0, z: 5 },
+  );
 
   requestAnimationFrame(frame);
 };

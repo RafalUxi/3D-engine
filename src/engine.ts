@@ -1,4 +1,5 @@
 import { ctx, w, h } from './base';
+import { type vec3 } from './math/vec';
 
 export const fov = Math.PI / 4;
 
@@ -29,11 +30,11 @@ export function calculateCoordinates(x: number, y: number, z: number) {
 }
 
 // Function to translate raw geometry points to screen
-export function projectedToScreen(geometry: { x: number; y: number; z: number }[]) {
+export function projectedToScreen(geometry: vec3[]) {
   const projected: ({ x: number; y: number } | null)[] = [];
 
   for (const p of geometry) {
-    const coord = calculateCoordinates(p.x, p.y, p.z + 5);
+    const coord = calculateCoordinates(p.x, p.y, p.z);
     projected.push(coord);
   }
   return projected;
@@ -68,8 +69,12 @@ export function drawEdges(
 }
 
 // Function that generates 3D geometry
-export function uxiDraw3D(geoPoints: { x: number; y: number; z: number }[], geoEdges: number[][]) {
-  const projectedPoints = projectedToScreen(geoPoints);
+export function uxiDraw3D(geoPoints: vec3[], geoEdges: number[][], rotation: vec3, position: vec3) {
+  const geometryRotate = rotateYXZ(geoPoints, rotation);
+  const geometryInput = geometryRotate.map((p) => {
+    return { x: p.x + position.x, y: p.y + position.y, z: p.z + position.z };
+  });
+  const projectedPoints = projectedToScreen(geometryInput);
 
   drawEdges(projectedPoints, geoEdges);
 
@@ -77,4 +82,37 @@ export function uxiDraw3D(geoPoints: { x: number; y: number; z: number }[], geoE
     if (!p) continue;
     drawPoint2D(p.x, p.y, 'red');
   }
+}
+
+export function rotateYXZ(points: vec3[], rotation: vec3): vec3[] {
+  const cosx = Math.cos(rotation.x);
+  const sinx = Math.sin(rotation.x);
+  const cosy = Math.cos(rotation.y);
+  const siny = Math.sin(rotation.y);
+  const cosz = Math.cos(rotation.z);
+  const sinz = Math.sin(rotation.z);
+  const transformY: vec3[] = [];
+
+  // First transfrom Y
+  for (const p of points) {
+    transformY.push({ x: p.x * cosy - p.z * siny, y: p.y, z: p.x * siny + p.z * cosy });
+  }
+
+  const transformYXZ = transformY
+    .map((p) => {
+      return {
+        x: p.x,
+        y: p.y * cosx - p.z * sinx,
+        z: p.y * sinx + p.z * cosx,
+      };
+    })
+    .map((p) => {
+      return {
+        x: p.x * cosz - p.y * sinz,
+        y: p.x * sinz + p.y * cosz,
+        z: p.z,
+      };
+    });
+
+  return transformYXZ;
 }
