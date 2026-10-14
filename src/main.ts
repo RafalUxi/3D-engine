@@ -1,21 +1,12 @@
 import './style.css';
 import { resize } from './base';
-import { calculateCoordinates, drawPoint2D, fillBG } from './engine';
-
-function draw(): void {
-  // resert scree/ fill bg
-
-  fillBG('black');
-
-  // transform to 3D
-  const coord = calculateCoordinates(0, 0, 5);
-  if (!coord) return;
-
-  drawPoint2D(coord.x, coord?.y, 'red');
-}
+import { fillBG, uxiDraw3D } from './engine';
+import { cube, cubeEdge } from './geometry';
 
 const frame = (): void => {
-  draw();
+  fillBG('black');
+  uxiDraw3D(cube, cubeEdge);
+
   requestAnimationFrame(frame);
 };
 

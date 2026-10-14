@@ -18,8 +18,15 @@
   "github.copilot.enable": { "*": false },
   "github.copilot.nextEditSuggestions.enabled": false,
 
-  // Use the project's TypeScript version
-  "typescript.tsdk": "node_modules/typescript/lib",
+  // Inlay hints: grey, read-only labels with inferred types (not inserted into the file)
+  "editor.inlayHints.enabled": "on",
+  "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
+  "typescript.inlayHints.variableTypes.enabled": true,
+  "typescript.inlayHints.variableTypes.suppressWhenTypeMatchesName": true,
+  "typescript.inlayHints.parameterNames.enabled": "literals",
+  "typescript.inlayHints.parameterNames.suppressWhenArgumentMatchesName": true,
+  "typescript.inlayHints.parameterTypes.enabled": true,
+  "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
 
   // Tailwind IntelliSense for classes in HTML/TS
   "files.associations": { "*.css": "tailwindcss" }
