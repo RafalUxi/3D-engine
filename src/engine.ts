@@ -1,6 +1,7 @@
 import { ctx, w, h } from './base';
 import { type vec3 } from './math/vec';
 import { rotateYXZ } from './math/transform';
+import { worldCamera, type Camera } from './math/camera';
 
 export const fov = Math.PI / 4;
 
@@ -76,6 +77,7 @@ export function uxiDraw3D(
   rotation: vec3,
   position: vec3,
   scale: vec3,
+  camera: Camera,
 ) {
   // Scale object
   const geometryScale = geoPoints.map((p) => {
@@ -90,8 +92,11 @@ export function uxiDraw3D(
     return { x: p.x + position.x, y: p.y + position.y, z: p.z + position.z };
   });
 
+  // Tranform points to camera position
+  const worldPoints = worldCamera(geometryPosition, camera);
+
   // Translate raw points to screen points
-  const projectedPoints = projectedToScreen(geometryPosition);
+  const projectedPoints = projectedToScreen(worldPoints);
 
   // Draw object edges
   drawEdges(projectedPoints, geoEdges);
