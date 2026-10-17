@@ -17,6 +17,14 @@ canvas.addEventListener('click', () => {
   }
 });
 
+window.addEventListener('mousedown', () => {
+  isMouseClick = true;
+});
+
+window.addEventListener('mouseup', () => {
+  isMouseClick = false;
+});
+
 window.addEventListener('keydown', (e) => {
   if (e.code === 'KeyA') {
     isKey_A = true;

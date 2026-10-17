@@ -1,30 +1,29 @@
 import type { Camera } from '../camera';
 import { uxiDraw3D } from '../../engine';
 import { cube, cubeEdge } from '../../geometry';
-import { type vec3 } from '../vec';
+import type { vec3 } from '../vec';
+import { calculateShoot } from './shooting';
 
-const TARGET_COUNT = 40;
-
-const randomPosition = generateRandomPosition(TARGET_COUNT);
-
-export function generateRandomPoints(camera: Camera) {
-  for (let i = 0; i < randomPosition.length; i++) {
-    const position = randomPosition[i];
+// Only generate targets and return what function did
+export function generateRandomPoints(camera: Camera, targets: vec3[]) {
+  for (let i = 0; i < targets.length; i++) {
+    const position = targets[i];
     if (position === undefined) continue;
     uxiDraw3D(cube, cubeEdge, { x: 0, y: 0, z: 0 }, position, { x: 0.2, y: 0.2, z: 0.2 }, camera);
   }
+  return targets;
 }
 
-function generateRandomPosition(number: number) {
-  const output: vec3[] = [];
-
-  for (let i = 0; i < number; i++) {
-    const randomX = Math.random() * 15 + 5;
-    const randomY = Math.random() * 7 + 3;
-    const randomZ = Math.random() * 15 + 5;
-
-    output.push({ x: randomX, y: randomY, z: randomZ });
+export function generatePoints(camera: Camera, targets: vec3[]) {
+  const targetHitted: { s: number; index: number }[] = [];
+  for (const [i, t] of targets.entries()) {
+    const s = calculateShoot(camera, t);
+    if (s !== null) {
+      targetHitted.push({ s: s, index: i });
+    }
   }
+  if (targetHitted.length === 0) return null;
 
-  return output;
+  const targetHittedSorted = targetHitted.sort((a, b) => a.s - b.s);
+  return targetHittedSorted[0];
 }

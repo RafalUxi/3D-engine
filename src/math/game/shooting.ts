@@ -4,7 +4,7 @@ import type { vec3 } from '../vec';
 
 const TARGET_RADIUS = 0.35;
 
-export function shooting(camera: Camera, targetCenter: vec3): number | null {
+export function calculateShoot(camera: Camera, targetCenter: vec3): number | null {
   const dir = shootDirection(camera);
   if (dir === undefined) return null;
 
