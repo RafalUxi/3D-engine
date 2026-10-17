@@ -4,8 +4,6 @@ export const canvas = isCanvas;
 export let w = canvas.clientWidth;
 export let h = canvas.clientHeight;
 
-export const dt = 0.1;
-
 const isCtx = canvas.getContext('2d');
 if (!isCtx) throw new Error('Canvas 2D context not available');
 export const ctx = isCtx;

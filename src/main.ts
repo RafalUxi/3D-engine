@@ -1,20 +1,29 @@
 import './style.css';
 import { resize } from './base';
-import { fillBG, uxiDraw3D } from './engine';
-import { cube, cubeEdge } from './geometry';
+import { fillBG } from './engine';
 import { forwardFlat, rightFlat, type Camera } from './math/camera';
 import { isKey_A, isKey_D, isKey_S, isKey_W, pitch, yaw } from './inputs';
-import { drawViewfinder } from './imaginePack';
+import { drawFloor, drawViewfinder } from './models/imaginePack';
+import { generateRandomPoints } from './math/game/generatePoints';
 
 const camera: Camera = {
   position: { x: 1, y: 1, z: 1 },
-  yaw: 0.5,
+  yaw: 0,
   pitch: 0,
 };
 
 const frame = (): void => {
-  fillBG('black');
+  // Background
+  fillBG('blue');
+
+  // const Floor
+  drawFloor('green', pitch);
+
+  // Crosshair
   drawViewfinder('red', 10, 10);
+
+  // draw targets
+  generateRandomPoints(camera);
 
   camera.yaw = yaw;
   camera.pitch = pitch;
@@ -39,42 +48,6 @@ const frame = (): void => {
     camera.position.x += right[0]!.x * 0.05;
     camera.position.z += right[0]!.z * 0.05;
   }
-
-  uxiDraw3D(
-    cube,
-    cubeEdge,
-    { x: 0, y: 0, z: 0 },
-    { x: 0, y: 0, z: 10 },
-    { x: 1, y: 1, z: 1 },
-    camera,
-  );
-
-  uxiDraw3D(
-    cube,
-    cubeEdge,
-    { x: 0, y: 0, z: 0 },
-    { x: 0, y: 5, z: 10 },
-    { x: 1, y: 1, z: 1 },
-    camera,
-  );
-
-  uxiDraw3D(
-    cube,
-    cubeEdge,
-    { x: 0, y: 0, z: 0 },
-    { x: 0, y: 5, z: 10 },
-    { x: 1, y: 1, z: 1 },
-    camera,
-  );
-
-  uxiDraw3D(
-    cube,
-    cubeEdge,
-    { x: 0, y: 0, z: 0 },
-    { x: 0, y: -5, z: 10 },
-    { x: 1, y: 1, z: 1 },
-    camera,
-  );
 
   requestAnimationFrame(frame);
 };

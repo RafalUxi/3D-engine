@@ -11,8 +11,8 @@ export function fillBG(color: string) {
 }
 
 export function drawPoint2D(x: number, y: number, color: string) {
-  const dw = 10;
-  const dh = 10;
+  const dw = 3;
+  const dh = 3;
   ctx.fillStyle = color;
   ctx.fillRect(x - dw / 2, y - dh / 2, dw, dh);
 }
