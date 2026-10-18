@@ -1,4 +1,5 @@
 import { canvas } from './base';
+import { sensitivity } from './game/stats';
 
 export let yaw = 0;
 export let pitch = 0;
@@ -7,15 +8,14 @@ export let isKey_A = false;
 export let isKey_S = false;
 export let isKey_D = false;
 export let isKey_W = false;
-export const sensitive = 0.003;
 
-canvas.addEventListener('click', () => {
+export function requestPointerLock() {
   if (document.pointerLockElement !== canvas) {
     canvas
       .requestPointerLock({ unadjustedMovement: true })
       .catch(() => canvas.requestPointerLock()); // przeglądarka bez tej opcji → zwykły lock
   }
-});
+}
 
 window.addEventListener('mousedown', () => {
   isMouseClick = true;
@@ -57,8 +57,8 @@ window.addEventListener('keyup', (e) => {
 
 window.addEventListener('mousemove', (e) => {
   if (document.pointerLockElement === canvas) {
-    yaw += e.movementX * sensitive;
+    yaw += e.movementX * sensitivity;
+    pitch -= e.movementY * sensitivity;
     pitch = Math.min(Math.max(pitch, -1.553), 1.553);
-    pitch -= e.movementY * sensitive;
   }
 });

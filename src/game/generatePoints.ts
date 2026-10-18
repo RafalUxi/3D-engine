@@ -1,7 +1,7 @@
-import type { Camera } from '../camera';
-import { uxiDraw3D } from '../../engine';
-import { cube, cubeEdge } from '../../geometry';
-import type { vec3 } from '../vec';
+import type { Camera } from '../math/camera';
+import { uxiDraw3D } from '../engine';
+import { cube, cubeEdge } from '../geometry';
+import type { vec3 } from '../math/vec';
 import { calculateShoot } from './shooting';
 
 // Only generate targets and return what function did

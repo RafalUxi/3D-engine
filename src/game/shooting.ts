@@ -1,6 +1,6 @@
-import type { Camera } from '../camera';
-import { shootDirection } from '../ray';
-import type { vec3 } from '../vec';
+import type { Camera } from '../math/camera';
+import { shootDirection } from '../math/ray';
+import type { vec3 } from '../math/vec';
 
 const TARGET_RADIUS = 0.35;
 

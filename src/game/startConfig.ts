@@ -1,4 +1,4 @@
-import { type vec3 } from '../vec';
+import { type vec3 } from '../math/vec';
 
 export const TARGET_COUNT = 500;
 
